@@ -131,26 +131,6 @@ function getMousePos(canvas, evt) {
   };
 }
 
-
-var ctrl = false;
-
-
-function showCtrl() {
-  if(!ctrl){
-    jQuery(".controlbar-open").css('right', 280).addClass('active')
-    jQuery("#ctrl-text").text("Close");
-    jQuery(".controlbar-wrapper").css('right', 0);
-    ctrl = true;
-  }
-  else {
-    jQuery(".controlbar-open").css('right', 0).removeClass('active');
-    jQuery("#ctrl-text").text("Open");
-    jQuery(".controlbar-wrapper").css('right', -280);
-    ctrl = false;
-  }
-}
-
-
 jQuery(document).ready(function($) {
   
   $("#side-menu").metisMenu({
