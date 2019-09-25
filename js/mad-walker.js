@@ -6,8 +6,6 @@ var timer, starttime, curtime, timediff, lastmousetime;
 
 var weightslider = document.getElementById('weightslider');
 var btnreset = document.getElementById('btnreset');
-var btnright = document.getElementById('rotateright');
-var btnleft = document.getElementById('rotateleft');
 var pauseswitch = document.getElementById('pauseswitch');
 var linesswitch = document.getElementById('linesswitch');
 
@@ -15,25 +13,12 @@ var linesswitch = document.getElementById('linesswitch');
 var colorpicker = document.getElementById('colorpicker');
 var dotsizeslider = document.getElementById('dotsizeslider');
 
-var rotRight = false;
-var rotLeft = false;
-var rot = -1;
-
 var paused = false;
 var lines = false;
 
-var mousespindown = false;
 var lastx = 0;
 var lasty = 0;
-var spindirx = 1;
-var spindiry = 0;
 var lastmousetime;
-var spinspeed = 0;
-var spinmatrix = newIdentMatrix();
-var spinning = false;
-var spin_azimuth = 0;
-var spin_azimuth_dir = 0;
-var spin_distance = 0;
 
 var done = false;
 /* end of variable initialization */
@@ -93,34 +78,6 @@ function init() {
     change_controls(weightslider.value, timer.getTimer());
   }, false);
 
-
-  btnleft.addEventListener("mousedown", function(e) {
-    rotLeft = true;
-    mousedown_rotate(e);
-  });
-  btnleft.addEventListener("mouseup", mouseup_rotate);
-
-  btnright.addEventListener("mousedown", function(e) {
-    rotRight = true;
-    mousedown_rotate(e);
-  });
-  btnright.addEventListener("mouseup", mouseup_rotate);
-
-  c.addEventListener("mousedown", function(e) {
-    e.preventDefault();
-    mousespindown = true;
-  });
-
-  c.addEventListener("mousemove", mousespin);
-
-  c.addEventListener("mouseup", function(e) {
-    mousespindown = false;
-  });
-
-  document.body.addEventListener("mouseup", function(e) {
-    mousespindown = false;
-  });
-
 }
 
 function update() {
@@ -130,14 +87,6 @@ function update() {
 
     curtime = timer.getTimer() - starttime;
 
-    if(spinning) {
-      spin_walker(timer.getTimer(), curtime);
-    } else {
-      spinmatrix = newIdentMatrix();
-    }
-
-    //lasttime = curtime;
-    walk.spinmatrix=spinmatrix;
     walk.drawWalker(curtime);
   }
 }
@@ -173,27 +122,6 @@ function change_controls(weight, t){
   starttime = t - (t - starttime)/difffreq;
 }
 
-function mousedown_rotate(event) {
-  rot = setInterval(rotate, 16.6666 /*execute every 100ms*/);   
-}
-
-function mouseup_rotate(event) {
-  if(rot!=-1) {  //Only stop if exists
-    clearInterval(rot);
-    rot=-1;
-    rotLeft = false;
-    rotRight = false;
-  }
-}
-
-function rotate() {
-  if(rotLeft) {
-    walk.camera_azimuth -= 2;
-  }
-  else if(rotRight) {
-    walk.camera_azimuth += 2;
-  }
-}
 
 function getMousePos(canvas, evt) {
   var rect = canvas.getBoundingClientRect();
@@ -203,75 +131,9 @@ function getMousePos(canvas, evt) {
   };
 }
 
-function mousespin(e) {
-  var pos = getMousePos(c, e);
-
-  if(mousespindown) {
-    spinning = true;
-    spindirx = pos.x - lastx;
-    spindiry = pos.y - lasty;
-    if((spindirx==0)&&(spindiry==0))
-    {
-      spindirx=1;
-    }
-    var mag = Math.sqrt(spindirx*spindirx + spindiry*spindiry);
-    spindirx = spindirx/mag;
-    spindiry = spindiry/mag;
-    spin_azimuth_dir = Math.floor(Math.random()*2)-1;
-    spinspeed = (Math.PI * (mag/(Math.random()*400+50))) / ((timer.getTimer()-lastmousetime+1));
-    //spinspeed = spinspeed * .005;
-  }
-  lastx = pos.x;
-  lasty = pos.y;
-  lastmousetime = timer.getTimer(); 
-}
-
-function spin_walker(t, cur) {
-  lastmatrix = spinmatrix;
-  spin_azimuth = (spin_azimuth + spin_azimuth_dir * spinspeed * 0.005)*0.97;
-
-  // spin_distance = Number(Math.sin(cur/3)*100*spinspeed);
-  spin_distance = 10000*spinspeed;
-
-  if(Number(walk.camera_distance) + spin_distance < 500)
-  {
-    spin_distance = spin_distance+(Number(walk.camera_distance)-spin_distance-500);
-  }
-  rotmatrix = rotateaxis(spinspeed/**(t - (lasttime+starttime))*/,spindiry,spindirx,0);
-  spinmatrix = multmatrix(rotmatrix,spinmatrix);
-  
-
-  spinspeed = spinspeed*0.96;
-
-  
-  vect = multvectormatrix(new Array(0,1,0,0),spinmatrix);
-  returnrotation = angleBetween(vect[0],vect[1],vect[2],0,1,0);
-  if(Math.abs(returnrotation[3])>0.0001)
-  {
-    rotdir = Math.abs(returnrotation[3])/returnrotation[3];
-      // spinmatrix = multmatrix(rotateaxis(-returnrotation[3]*0.03, returnrotation[0], returnrotation[1], returnrotation[2]),spinmatrix);
-      if(Math.abs(returnrotation[3])<=0.1){
-        spinmatrix = multmatrix(rotateaxis(-returnrotation[3]*0.1, returnrotation[0], returnrotation[1], returnrotation[2]),spinmatrix);
-      }else{
-        spinmatrix = multmatrix(rotateaxis(-rotdir*0.01, returnrotation[0], returnrotation[1], returnrotation[2]),spinmatrix);
-      }
-    }
-    
-    vect = multvectormatrix(new Array(1,0,0,0),spinmatrix);
-    returnrotation = angleBetween(vect[0],vect[1],vect[2],1,0,0);
-    if(Math.abs(returnrotation[3])>0.0001)
-    {
-      rotdir = Math.abs(returnrotation[3])/returnrotation[3];
-      // spinmatrix = multmatrix(rotateaxis(-returnrotation[3]*0.01, returnrotation[0], returnrotation[1], returnrotation[2]),spinmatrix);
-      if(Math.abs(returnrotation[3])<=0.1){
-        spinmatrix = multmatrix(rotateaxis(-returnrotation[3]*0.1, returnrotation[0], returnrotation[1], returnrotation[2]),spinmatrix);
-      }else{
-        spinmatrix = multmatrix(rotateaxis(-rotdir*0.01, returnrotation[0], returnrotation[1], returnrotation[2]),spinmatrix);
-      }
-    }
-  }
 
 var ctrl = false;
+
 
 function showCtrl() {
   if(!ctrl){

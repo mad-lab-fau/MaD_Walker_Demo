@@ -20,7 +20,6 @@ function Walker() {
   this.right = 0;
   this.top = 0;
   this.bottom = 0;
-  this.spinmatrix = newIdentMatrix();
   this.walker_colour = "#ffffff";
   this.sticks_force_visible = false;
   this.dotsize = 4;
@@ -518,16 +517,9 @@ Walker.prototype.init = function() {
       }
     }
 
-    //draw walker, rotating by azimuth, axisrot, elevation and spinmatrix
+    //draw walker, rotating by azimuth, axisrot, elevation
     var matrix = rotateaxis(-this.axisrot,this.walker_rot_xaxis,this.walker_rot_yaxis,this.walker_rot_zaxis);
-    
-    matrix = multmatrix(translate(0,0,this.translation_pos), matrix);
-    matrix = multmatrix(rotateaxis(this.camera_azimuth*Math.PI/180+(((curtime)*this.camera_angvelocity*Math.PI/180)/1000),0,1,0), matrix);
-
-    //console.log(matrix);
-    matrix = multmatrix(this.spinmatrix, matrix);
-    matrix = multmatrix(rotateX((this.camera_elevation)*Math.PI/180),matrix);
-    
+       
     var vectors = new Array(this.nummarkers);
     var vector = new Array(4);
     var v2 = new Array(4);
@@ -622,62 +614,7 @@ Walker.prototype.init = function() {
         this.drawLineX(vectors,13,14,invis);
       }
 
-    }// temporary
-
-
-    //   if(this.walker_object == 1)
-    //   {
-    //     //legs
-    //     this.drawLineX(vectors,0,1,invis);
-    //     this.drawLineX(vectors,1,2,invis);
-
-    //     this.drawLineX(vectors,15,16,invis);
-    //     this.drawLineX(vectors,16,17,invis);
-        
-    //     this.drawLineX(vectors,12,13,invis);
-    //     this.drawLineX(vectors,13,14,invis);
-        
-    //     this.drawLineX(vectors,5,6,invis);
-    //     this.drawLineX(vectors,6,7,invis);
-        
-        
-    //     this.drawLineX(vectors,11,8,invis);
-    //     this.drawLineX(vectors,8,10,invis);
-    //     this.drawLineX(vectors,9,3,invis);
-    //     this.drawLineX(vectors,3,4,invis);
-    //     this.drawLineX(vectors,4,10,invis);
-    //   }
-    //   if(this.walker_object == 2)
-    //   {
-    //     //head
-    //     this.drawLineX(vectors,0,1,invis);
-    //     this.drawLineX(vectors,1,2,invis);
-    //     this.drawLineX(vectors,2,0,invis);
-        
-    //     this.drawLineX(vectors,3,4,invis);
-    //     this.drawLineX(vectors,4,5,invis);
-    //     this.drawLineX(vectors,5,6,invis);
-    //     this.drawLineX(vectors,6,3,invis);
-        
-    //     this.drawLineX(vectors,7,8,invis);
-    //     this.drawLineX(vectors,9,10,invis);
-    //   }
-    //   if(this.walker_object == 3)
-    //   {
-    //     this.drawLineX(vectors,0,1,invis);
-    //     this.drawLineX(vectors,1,2,invis);
-    //     this.drawLineX(vectors,2,3,invis);
-    //     this.drawLineX(vectors,3,0,invis);
-    //     this.drawLineX(vectors,4,5,invis);
-    //     this.drawLineX(vectors,5,6,invis);
-    //     this.drawLineX(vectors,6,7,invis);
-    //     this.drawLineX(vectors,7,4,invis);
-    //     this.drawLineX(vectors,0,4,invis);
-    //     this.drawLineX(vectors,1,5,invis);
-    //     this.drawLineX(vectors,2,6,invis);
-    //     this.drawLineX(vectors,3,7,invis);
-    //   }
-    // }
+    }
   }
   
   Walker.prototype.drawDot = function(x,y)
