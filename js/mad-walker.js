@@ -23,20 +23,20 @@ var lastmousetime;
 var done = false;
 /* end of variable initialization */
 
-window.onload=function() {
+window.onload = function () {
   init();
-  setInterval(update, 1000/60);
+  setInterval(update, 1000 / 60);
 }
 
 function Timer(init, precision) {
   var start = time = new Date(init || null).valueOf(),
-  precision = precision || 10;
+    precision = precision || 10;
 
   setInterval(function () { time += precision; }, precision);
 
-  this.getTimer = function() { return time - start; };
-  this.getDate = function() { return new Date(time); };
-  this.setTimer = function(t) { time = new Date(t).valueOf(); }
+  this.getTimer = function () { return time - start; };
+  this.getDate = function () { return new Date(time); };
+  this.setTimer = function (t) { time = new Date(t).valueOf(); }
 }
 
 function init() {
@@ -50,15 +50,15 @@ function init() {
 
   init_walker();
 
-  btnreset.addEventListener("click", function() {
+  btnreset.addEventListener("click", function () {
     timer.setTimer(0);
     init_walker();
     reset_controls();
-    if(paused) { paused = false; }
+    if (paused) { paused = false; }
   }, false);
 
-  pauseswitch.addEventListener("change", function() {
-    if(!paused) {
+  pauseswitch.addEventListener("change", function () {
+    if (!paused) {
       lasttime = timer.getTimer();
       paused = true;
     }
@@ -68,22 +68,22 @@ function init() {
     }
   });
 
-  linesswitch.addEventListener("change", function() {
+  linesswitch.addEventListener("change", function () {
     walk.walker_sticks = !walk.walker_sticks;
     lines = !lines;
   });
 
 
-  weightslider.addEventListener("input", function() {
+  weightslider.addEventListener("input", function () {
     change_controls(weightslider.value, timer.getTimer());
   }, false);
 
 }
 
 function update() {
-  if(!paused) {
-    cc.fillStyle='black';
-    cc.fillRect(0,0,c.width,c.height);
+  if (!paused) {
+    cc.fillStyle = 'black';
+    cc.fillRect(0, 0, c.width, c.height);
 
     curtime = timer.getTimer() - starttime;
 
@@ -91,20 +91,20 @@ function update() {
   }
 }
 
-function init_walker(){
+function init_walker() {
   //lines = false;
   walk = new Walker();
   walk.ctx = cc;
   walk.walker_colour = "#ffffff";
   walk.walker_size = 10;
   walk.dotsize = 3;
-  walk.offsetx = c.width/2;
-  walk.offsety = c.height/2;
+  walk.offsetx = c.width / 2;
+  walk.offsety = c.height / 2;
   //handleResize();
 
   walk.init();
   walk.walker_sticks = false;
- 
+
 }
 
 function reset_controls() {
@@ -114,12 +114,12 @@ function reset_controls() {
   pauseswitch.checked = false;
 }
 
-function change_controls(weight, t){
+function change_controls(weight, t) {
   var freq = walk.getFrequency();
-  walk.walker_weight = -6 * (weight - 64)/64;
+  walk.walker_weight = -6 * (weight - 64) / 64;
   walk.init();
-  var difffreq = freq/walk.getFrequency();
-  starttime = t - (t - starttime)/difffreq;
+  var difffreq = freq / walk.getFrequency();
+  starttime = t - (t - starttime) / difffreq;
 }
 
 
@@ -131,10 +131,10 @@ function getMousePos(canvas, evt) {
   };
 }
 
-jQuery(document).ready(function($) {
-  
+jQuery(document).ready(function ($) {
+
   $("#side-menu").metisMenu({
     activeClass: 'active'
   });
-  
+
 });
