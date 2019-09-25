@@ -4,10 +4,7 @@ var walk = new Walker();
 var c, cc;
 var timer, starttime, curtime, timediff, lastmousetime;
 
-var genderslider = document.getElementById('genderslider');
 var weightslider = document.getElementById('weightslider');
-var nervousslider = document.getElementById('nervousslider');
-var happyslider = document.getElementById('happyslider');
 var btnreset = document.getElementById('btnreset');
 var btnright = document.getElementById('rotateright');
 var btnleft = document.getElementById('rotateleft');
@@ -91,18 +88,11 @@ function init() {
     lines = !lines;
   });
 
-  genderslider.addEventListener("input", function() {
-    change_controls(genderslider.value, weightslider.value, nervousslider.value, happyslider.value, timer.getTimer());
-  }, false);
+
   weightslider.addEventListener("input", function() {
-    change_controls(genderslider.value, weightslider.value, nervousslider.value, happyslider.value, timer.getTimer());
+    change_controls(weightslider.value, timer.getTimer());
   }, false);
-  nervousslider.addEventListener("input", function() {
-    change_controls(genderslider.value, weightslider.value, nervousslider.value, happyslider.value, timer.getTimer());
-  }, false);
-  happyslider.addEventListener("input", function() {
-    change_controls(genderslider.value, weightslider.value, nervousslider.value, happyslider.value, timer.getTimer());
-  }, false);
+
 
   btnleft.addEventListener("mousedown", function(e) {
     rotLeft = true;
@@ -169,24 +159,15 @@ function init_walker(){
 }
 
 function reset_controls() {
-  genderslider.value = 64;
   weightslider.value = 64;
-  nervousslider.value = 64;
-  happyslider.value = 64;
-
-  //colorpicker.jscolor.fromString('ffffff');
-  //dotsizeslider.value = 3;
 
   linesswitch.checked = false;
   pauseswitch.checked = false;
 }
 
-function change_controls(gender, weight, nervousness, happiness, t){
+function change_controls(weight, t){
   var freq = walk.getFrequency();
-  walk.walker_gender = -6 * (gender - 64)/64;
   walk.walker_weight = -6 * (weight - 64)/64;
-  walk.walker_nervousness = -6 * (nervousness - 64)/64;
-  walk.walker_happiness = -6 * (happiness - 64)/64;
   walk.init();
   var difffreq = freq/walk.getFrequency();
   starttime = t - (t - starttime)/difffreq;
