@@ -82,7 +82,6 @@ function Walker() {
   this.flicker_ontime = 100;
   this.flicker_duration = 1;
   this.flicker_randomness = 0;
-  this.camera_perspective = 0;
   this.walker_scrambling_horiz = true;
   this.walker_scrambling_vert = true;
   this.walker_scrambling_phase = false;
@@ -497,7 +496,6 @@ Walker.prototype.drawWalker = function (curtime) {
   var vectors = new Array(this.nummarkers);
   var vector = new Array(4);
   var v2 = new Array(4);
-  var v3 = new Array(4);
   var yoffset = this.walkeryoff;
   var zoffset = this.walkerzoff;
   var xoffset = this.walkerxoff;
@@ -516,30 +514,13 @@ Walker.prototype.drawWalker = function (curtime) {
     vector[3] = 1;
     v2 = multmatrixvector(matrix, vector);
 
-
-
     v2[2] -= this.camera_distance;
     v2[3] = 1;
 
-    if (this.camera_perspective > 0) {
-      var persp = perspective(this.camera_distance);
-      v3 = multmatrixvector(persp, v2);
-      v3[0] = v3[0] / v3[3];
-      v3[1] = v3[1] / v3[3];
-      v3[2] = v3[2] / v3[3];
-
-      if ((v2[2] > 0) || (v3[3] == 0)) {
-        invis[i] = 1;
-      }
-    } else {
-      v3 = v2;
-    }
-
-
     //nudge up
-    var xpos = this.curoffsetx + (v3[0] / this.walkersizefactor) * this.walker_size * this.pixelsperdegree;
-    var ypos = this.curoffsety - (v3[1] / this.walkersizefactor) * this.walker_size * this.pixelsperdegree;
-    vectors[i] = v3;
+    var xpos = this.curoffsetx + (v2[0] / this.walkersizefactor) * this.walker_size * this.pixelsperdegree;
+    var ypos = this.curoffsety - (v2[1] / this.walkersizefactor) * this.walker_size * this.pixelsperdegree;
+    vectors[i] = v2;
 
     if (this.markers_invisible[i]) {
       invis[i] = 1;
