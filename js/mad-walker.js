@@ -115,11 +115,7 @@ function reset_controls() {
 }
 
 function change_controls(weight, t) {
-  var freq = walk.getFrequency();
-  walk.walker_weight = -6 * (weight - 64) / 64;
   walk.init();
-  var difffreq = freq / walk.getFrequency();
-  starttime = t - (t - starttime) / difffreq;
 }
 
 
