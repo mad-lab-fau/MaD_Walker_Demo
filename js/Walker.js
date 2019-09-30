@@ -15,7 +15,6 @@ function Walker() {
   this.linesdrawn = false;
 
   //general stuff
-  this.walker_speed = 1;
   this.walker_sticks = true;
 
   this.flicker_ontime = 100;
@@ -23,6 +22,9 @@ function Walker() {
   this.flicker_randomness = 0;
 
   this.markers_invisible = null;
+
+  //current data
+  this.dataStr = "testData";
 
   //--------------INTERNAL IABLES--------------------
   this.walkersizefactor = 1500;
@@ -68,8 +70,22 @@ Walker.prototype.init = function () {
 
 }
 
-Walker.prototype.calcTime = function (curtime) {
-  return (curtime / 159.1549) * (120 / 507); // TODO: update 
+Walker.prototype.calcNode = function (curtime) { // curtime in ms
+  
+  var nNodes = this.data[this.dataStr].length;
+  var curtimeMod = (curtime/1000) % this.data[this.dataStr][nNodes-1][1]; // in s
+  var diff = new Array(nNodes);
+  var minDiff = 9999;
+  var curNode = -1;
+  for (var iNode = 0; iNode < nNodes-1; iNode++){
+    diff[iNode] = Math.abs(this.data[this.dataStr][iNode][1] - curtimeMod);
+    if (diff[iNode] < minDiff){
+      minDiff = diff[iNode];
+      curNode = iNode;
+    }
+  }
+  
+  return curNode;
 }
 
 //function that draws walker
@@ -104,31 +120,16 @@ Walker.prototype.drawWalker = function (curtime) {
     }
   }
 
-  var walkertime = 0;
-  if (this.walker_speed != 0) {
-    walkertime = this.calcTime(curtime);//(curtime / 159.1549)*(120/(this.meanwalker[this.walker_object][this.nummarkers*3]/this.walker_speed));
-  }
-
-  //load data
-  //d3.csv("../data/2019_08_28_script2D_running_MaD_Walker_Data.csv").then(function(data) {
-  //  console.log(data[0]);
-  //});
-  // var fileUrl = "../data/2019_08_28_script2D_running_MaD_Walker_Data.csv";
-  // fetch(fileUrl)
-  //  .then( r => r.text() )
-  //  .then( t => console.log(t) )
-
-  // this.readcsv("../data/2019_08_28_script2D_running_MaD_Walker_Data.csv")
+  var curnode = this.calcNode(curtime);
 
   var vectors  = new Array(this.nummarkersMaD);
   for (n = 0; n < this.nummarkersMaD; n++) {
-    var xpos =   this.offsetx + (   this.data.testData[0][(n+1)*2  ] * 1000 / this.walkersizefactor) * this.walker_size * this.pixelsperdegree;
-    var ypos = 2*this.offsety + (-1*this.data.testData[0][(n+1)*2+1] * 1000 / this.walkersizefactor) * this.walker_size * this.pixelsperdegree;
+    var xpos =   this.offsetx + (   this.data[this.dataStr][curnode][(n+1)*2  ] * 1000 / this.walkersizefactor) * this.walker_size * this.pixelsperdegree;
+    var ypos = 2*this.offsety + (-1*this.data[this.dataStr][curnode][(n+1)*2+1] * 1000 / this.walkersizefactor) * this.walker_size * this.pixelsperdegree;
     vectors[n] = new Array(xpos, ypos);
    
     this.drawDot(xpos, ypos);
   }
-
 
   if (this.walker_sticks) {
     if (this.walker_object == 0) {
