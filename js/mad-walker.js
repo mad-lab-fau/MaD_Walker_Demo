@@ -4,7 +4,7 @@ var walk = new Walker();
 var c, cc;
 var timer, starttime, curtime, timediff, lastmousetime;
 
-var weightslider = document.getElementById('weightslider');
+var speedslider = document.getElementById('speedslider');
 var btnreset = document.getElementById('btnreset');
 var pauseswitch = document.getElementById('pauseswitch');
 var linesswitch = document.getElementById('linesswitch');
@@ -74,8 +74,8 @@ function init() {
   });
 
 
-  weightslider.addEventListener("input", function () {
-    change_controls(weightslider.value, timer.getTimer());
+  speedslider.addEventListener("input", function () {
+    change_controls(speedslider.value, timer.getTimer());
   }, false);
 
 }
@@ -107,13 +107,13 @@ function init_walker() {
 }
 
 function reset_controls() {
-  weightslider.value = 64;
+  speedslider.value = 3;
 
   linesswitch.checked = false;
   pauseswitch.checked = false;
 }
 
-function change_controls(weight, t) {
+function change_controls(speed, t) {
   walk.init();
 }
 

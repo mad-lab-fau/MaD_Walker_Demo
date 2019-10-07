@@ -52,9 +52,47 @@
 			width: 550px
 		}
 
+		.slider {
+			-webkit-appearance: none;
+			width: 100%;
+			height: 15px;
+			border-radius: 5px;  
+			background: #C6C6C5;
+			outline: none;
+			opacity: 1;
+			-webkit-transition: .2s;
+			transition: opacity .2s;
+		}
+
+		.slider:hover {
+			opacity: 1;
+		}
+
+		.slider::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			appearance: none;
+			width: 25px;
+			height: 25px;
+			background: #003660;
+			cursor: pointer;
+		}
+
+		.slider::-moz-range-thumb {
+			width: 25px;
+			height: 25px;
+			background: #003660;
+			cursor: pointer;
+		}
+
 		div.fl-right {
-			margin-left: 260px;
-			margin-top: -20px;
+			margin-left: 310px;
+			margin-top: -27px;
+			float: right;
+			font-size:20px;
+		}
+
+		div.fl-left {
+			font-size:20px;
 		}
 
 		li.switch {
@@ -92,48 +130,27 @@
 
 		<div class="controlbar-wrapper">
 			<div class="controlbar">
-				<ul class="nav metismenu" id="side-menu">
-					<li>
-						<a href="index.html"><span class="fa arrow"></span>Weight</a>
-						<ul class="nav nav-second-level">
-							<li>
-								<div class="fl-left">Heavy</div>
-								<div class="fl-right">Light</div>
-								<div class="range"><input id="weightslider" type="range" max="128" value="64"></div>
-							</li>
-						</ul>
-					</li>
-					<li class="break">
+				<h2>Speed</h2>
+				<div class="fl-left">Walking</div>
+				<div class="fl-right">Running</div>
+				<p>
+					<input id="speedslider" class="slider" type="range" min="1" max ="6" step ="1" value= "3">
+				</p>
 
-					</li>
-					<li class="break end">
+				<h2>Lines</h2>
+				<div class="onoffswitch">
+					<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="linesswitch">
+					<label class="onoffswitch-label" for="linesswitch"></label>
+				</div>
 
-					</li>
-					<li class="switch">
-						<div class="fl-right a">Lines</div>
-						<div class="onoffswitch">
-							<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="linesswitch">
-							<label class="onoffswitch-label" for="linesswitch"></label>
-						</div>
-					</li>
-					<li class="switch">
-						<div class="fl-right a">Pause</div>
-						<div class="onoffswitch">
-							<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="pauseswitch">
-							<label class="onoffswitch-label" for="pauseswitch"></label>
-						</div>
-					</li>
+				<h2>Pause</h2>
+				<div class="onoffswitch">
+					<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="pauseswitch">
+					<label class="onoffswitch-label" for="pauseswitch"></label>
+				</div>
 
-					<li class="break" style="display: none;">
-
-					</li>
-					<li class="break end" style="display: none;">
-
-					</li>
-					<li>
-						<button id="btnreset" class="btn-a" type="button"><span>Reset</span></button>
-					</li>
-				</ul>
+				<br>
+				<button id="btnreset" class="btn-a" type="button"><span>Reset</span></button>
 
 			</div> <!-- controlbar -->
 		</div> <!-- controlbar-wrapper -->
