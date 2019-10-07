@@ -7,7 +7,7 @@ function Walker() {
   //graphical stuff
   this.offsetx = 0;
   this.offsety = 0;
-  this.walker_colour = "#ffffff";
+  this.walker_colour = "#000000";
   this.sticks_force_visible = false;
   this.dotsize = 4;
 

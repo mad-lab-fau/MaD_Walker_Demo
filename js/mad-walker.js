@@ -82,7 +82,7 @@ function init() {
 
 function update() {
   if (!paused) {
-    cc.fillStyle = 'black';
+    cc.fillStyle = 'white';
     cc.fillRect(0, 0, c.width, c.height);
 
     curtime = timer.getTimer() - starttime;
@@ -95,7 +95,6 @@ function init_walker() {
   //lines = false;
   walk = new Walker();
   walk.ctx = cc;
-  walk.walker_colour = "#ffffff";
   walk.walker_size = 10;
   walk.dotsize = 3;
   walk.offsetx = c.width / 2;
