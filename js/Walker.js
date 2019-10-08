@@ -20,6 +20,7 @@ function Walker() {
 
   //general stuff
   this.walker_sticks = true;
+  this.walker_PlaybackSpeed = 1;
 
   this.flicker_ontime = 100;
   this.flicker_duration = 1;
@@ -84,7 +85,7 @@ Walker.prototype.init = function () {
 Walker.prototype.calcNode = function (curtime) { // curtime in ms
   
   var nNodes = this.data[this.dataStr].length;
-  var curtimeMod = (curtime/1000) % this.data[this.dataStr][nNodes-1][1]; // in s
+  var curtimeMod = (curtime/1000*this.walker_PlaybackSpeed) % this.data[this.dataStr][nNodes-1][1]; // in s*walker_PlaybackSpeed
   var diff = new Array(nNodes);
   var minDiff = 9999;
   var curNode = -1;
