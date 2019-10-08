@@ -16,7 +16,7 @@ function Walker() {
 
   // walker specific variables 
   this.walker_speed = 3;
-  this.walker_speedStrings = new Array("slowwalking", "normwalking", "fastwalking", "slowrunning", "normrunning", "fastrunning");
+  this.walker_speedStrings = new Array("slowwalking", "normwalking", "fastwalking", "slowrunning", "fastrunning");
 
   //general stuff
   this.walker_sticks = true;
