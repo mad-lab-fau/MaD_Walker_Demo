@@ -24,6 +24,7 @@ var done = false;
 /* end of variable initialization */
 
 window.onload = function () {
+  reset_controls();
   init();
   setInterval(update, 1000 / 60);
 }
