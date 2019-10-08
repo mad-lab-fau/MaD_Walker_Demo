@@ -104,7 +104,7 @@ function init_walker() {
   walk.walker_size = 10;
   walk.dotsize = 3;
   walk.offsetx = c.width / 2;
-  walk.offsety = c.height / 2;
+  walk.offsety = c.height / 2-30; //-30=offset for floor
   //handleResize();
 
   walk.init();

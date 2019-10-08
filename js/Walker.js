@@ -134,7 +134,7 @@ Walker.prototype.drawWalker = function (curtime) {
 
   var curnode = this.calcNode(curtime);
 
-  var vectors  = new Array(this.nummarkersMaD);
+  var vectors  = new Array(this.nummarkersMaD+2); // plus two points to define the ground
   for (n = 0; n < this.nummarkersMaD; n++) {
     var xpos =   this.offsetx + (   this.data[this.dataStr][curnode][(n+1)*2  ] * 1000 / this.walkersizefactor) * this.walker_size * this.pixelsperdegree;
     var ypos = 2*this.offsety + (-1*this.data[this.dataStr][curnode][(n+1)*2+1] * 1000 / this.walkersizefactor) * this.walker_size * this.pixelsperdegree;
@@ -142,6 +142,14 @@ Walker.prototype.drawWalker = function (curtime) {
    
     this.drawDot(xpos, ypos);
   }
+
+  // Draw floor
+  var xpos =     this.offsetx + (-9999 / this.walkersizefactor) * this.walker_size * this.pixelsperdegree;
+  var ypos = 2 * this.offsety + (0 / this.walkersizefactor) * this.walker_size * this.pixelsperdegree;
+  vectors[n+1] = new Array(xpos, ypos);
+  vectors[n+2] = new Array(-xpos, ypos);
+  this.drawLineX(vectors[n+1], vectors[n+2]);
+
 
   if (this.walker_sticks) {
     if (this.walker_object == 0) {
