@@ -92,6 +92,7 @@
 		}
 
 		div.fl-left {
+			margin-top:-20px;
 			font-size:20px;
 		}
 
@@ -107,6 +108,11 @@
 		div.onoffswitch {
 			margin-left: 35px;
 		}
+
+		h2{
+			margin-bottom: -20px;
+		}
+
 	</style>
 </head>
 
@@ -144,18 +150,14 @@
 					<input id="playbackspeedslider" class="slider" type="range" min="0.25" max ="1.75" step ="0.25" value= "1">
 				</p>
 
-				<h2>Lines</h2>
-				<div class="onoffswitch">
-					<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="linesswitch">
-					<label class="onoffswitch-label" for="linesswitch"></label>
-				</div>
+				<h2 class="inline">Lines</h2>
+				<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="linesswitch">
 
 				<h2>Pause</h2>
-				<div class="onoffswitch">
-					<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="pauseswitch">
-					<label class="onoffswitch-label" for="pauseswitch"></label>
-				</div>
+				<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="pauseswitch">
 
+				<br>
+				<br>
 				<br>
 				<button id="btnreset" class="btn-a" type="button"><span>Reset</span></button>
 
