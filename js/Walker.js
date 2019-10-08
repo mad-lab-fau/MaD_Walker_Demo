@@ -14,6 +14,10 @@ function Walker() {
   this.dotShapes = [];
   this.linesdrawn = false;
 
+  // walker specific variables 
+  this.walker_speed = 3;
+  this.walker_speedStrings = new Array("slowwalking", "normwalking", "fastwalking", "slowrunning", "normrunning", "fastrunning");
+
   //general stuff
   this.walker_sticks = true;
 
@@ -24,7 +28,7 @@ function Walker() {
   this.markers_invisible = null;
 
   //current data
-  this.dataStr = "testData";
+  this.dataStr = "";
 
   //--------------INTERNAL IABLES--------------------
   this.walkersizefactor = 1500;
@@ -49,6 +53,13 @@ Walker.prototype.constructor = Walker;
 Walker.prototype.init = function () {
 
   var n;
+
+  //get initial data set
+  var subjectStr = "Sub150716_1";
+  var speedString = this.walker_speedStrings[this.walker_speed - 1];
+  var slopeStr = "slope_00";
+  var gravityStr = "gravity_9_81";
+  this.dataStr = subjectStr + "_" + speedString + "_" + slopeStr + "_" + gravityStr;
 
   //dot flicker initialization stuff
   this.durationstd = this.flicker_randomness / 100;

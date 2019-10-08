@@ -114,6 +114,7 @@ function reset_controls() {
 }
 
 function change_controls(speed, t) {
+  walk.walker_speed = speed;
   walk.init();
 }
 
