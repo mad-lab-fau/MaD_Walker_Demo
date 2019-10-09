@@ -5,6 +5,7 @@ var c, cc;
 var timer, starttime, curtime, timediff, lastmousetime;
 
 var speedslider = document.getElementById('speedslider');
+var gravityslider = document.getElementById('gravityslider');
 var playbackspeedslider = document.getElementById('playbackspeedslider');
 var btnreset = document.getElementById('btnreset');
 var pauseswitch = document.getElementById('pauseswitch');
@@ -77,11 +78,15 @@ function init() {
 
 
   speedslider.addEventListener("input", function () {
-    change_controls(speedslider.value, playbackspeedslider.value, timer.getTimer());
+    change_controls();
+  }, false);
+
+  gravityslider.addEventListener("input", function () {
+    change_controls();
   }, false);
 
   playbackspeedslider.addEventListener("input", function () {
-    change_controls(speedslider.value, playbackspeedslider.value, timer.getTimer());
+    change_controls();
   }, false);
 
 }
@@ -114,15 +119,17 @@ function init_walker() {
 
 function reset_controls() {
   speedslider.value = 3;
+  gravityslider.value = 2;
   playbackspeedslider.value = 1;
 
   linesswitch.checked = false;
   pauseswitch.checked = false;
 }
 
-function change_controls(speed, playbackspeed, t) {
-  walk.walker_speed = speed;
-  walk.walker_PlaybackSpeed = playbackspeed;
+function change_controls() {
+  walk.walker_speed = speedslider.value;
+  walk.walker_gravity = gravityslider.value;
+  walk.walker_PlaybackSpeed = playbackspeedslider.value;
   walk.init();
 }
 

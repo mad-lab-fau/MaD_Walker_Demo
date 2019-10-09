@@ -17,6 +17,8 @@ function Walker() {
   // walker specific variables 
   this.walker_speed = 3;
   this.walker_speedStrings = new Array("slowwalking", "normwalking", "fastwalking", "slowrunning", "fastrunning");
+  this.walker_gravity = 2;
+  this.walker_gravityStrings = new Array("1_62", "9_81", "24_79");
 
   //general stuff
   this.walker_sticks = true;
@@ -59,7 +61,7 @@ Walker.prototype.init = function () {
   var subjectStr = "Sub150716_1";
   var speedString = this.walker_speedStrings[this.walker_speed - 1];
   var slopeStr = "slope_00";
-  var gravityStr = "gravity_9_81";
+  var gravityStr = "gravity_" + this.walker_gravityStrings[this.walker_gravity - 1];
   this.dataStr = subjectStr + "_" + speedString + "_" + slopeStr + "_" + gravityStr;
 
   //dot flicker initialization stuff
