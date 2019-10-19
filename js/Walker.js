@@ -17,6 +17,9 @@ function Walker() {
   // walker specific variables 
   this.walker_speed = 3;
   this.walker_speedStrings = new Array("slowwalking", "normwalking", "fastwalking", "slowrunning", "fastrunning");
+  this.walker_slope = 4;
+  this.walker_slopeValues = new Array(-30, -20, -10, 0, 10, 20, 30);
+  this.walker_slopeStrings = new Array("m30", "m20", "m10", "00", "10", "20", "30");
   this.walker_gravity = 2;
   this.walker_gravityStrings = new Array("1_62", "9_81", "24_79");
 
@@ -60,9 +63,11 @@ Walker.prototype.init = function () {
   //get initial data set
   var subjectStr = "Sub150716_1";
   var speedString = this.walker_speedStrings[this.walker_speed - 1];
-  var slopeStr = "slope_00";
+  var slopeStr = "slope_" + this.walker_slopeStrings[this.walker_slope - 1];
   var gravityStr = "gravity_" + this.walker_gravityStrings[this.walker_gravity - 1];
   this.dataStr = subjectStr + "_" + speedString + "_" + slopeStr + "_" + gravityStr;
+  console.log(this.dataStr);
+  
 
   //dot flicker initialization stuff
   this.durationstd = this.flicker_randomness / 100;
@@ -146,10 +151,22 @@ Walker.prototype.drawWalker = function (curtime) {
   }
 
   // Draw floor
-  var xpos =     this.offsetx + (-9999 / this.walkersizefactor) * this.walker_size * this.pixelsperdegree;
-  var ypos = 2 * this.offsety + (0 / this.walkersizefactor) * this.walker_size * this.pixelsperdegree;
-  vectors[n+1] = new Array(xpos, ypos);
-  vectors[n+2] = new Array(-xpos, ypos);
+  var slope = this.walker_slopeValues[this.walker_slope - 1]/180*Math.PI; // slope in radians
+  var xval1 = -5000;
+  var xval2 = 5000;
+  var yval1 = 0;
+  var yval2 = 0;
+  var xval1 = Math.cos(slope)*xval1 - Math.sin(slope)*yval1;
+  var yval1 = Math.sin(slope)*xval1 + Math.cos(slope)*yval1;
+  var xval2 = Math.cos(slope)*xval2 - Math.sin(slope)*yval2;
+  var yval2 = Math.sin(slope)*xval2 + Math.cos(slope)*yval2;
+
+  var xpos1 =     this.offsetx + (xval1 / this.walkersizefactor) * this.walker_size * this.pixelsperdegree;
+  var ypos1 =  2* this.offsety + (yval1 / this.walkersizefactor) * this.walker_size * this.pixelsperdegree;
+  var xpos2 =     this.offsetx + (xval2 / this.walkersizefactor) * this.walker_size * this.pixelsperdegree;
+  var ypos2 =  2* this.offsety + (yval2 / this.walkersizefactor) * this.walker_size * this.pixelsperdegree;
+  vectors[n+1] = new Array(xpos1, ypos2);
+  vectors[n+2] = new Array(xpos2, ypos1);
   this.drawLineX(vectors[n+1], vectors[n+2]);
 
 
