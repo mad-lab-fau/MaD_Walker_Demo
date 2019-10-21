@@ -17,7 +17,7 @@ var colorpicker = document.getElementById('colorpicker');
 var dotsizeslider = document.getElementById('dotsizeslider');
 
 var paused = false;
-var lines = false;
+var lines = true;
 
 var lastx = 0;
 var lasty = 0;
@@ -118,7 +118,7 @@ function init_walker() {
   //handleResize();
 
   walk.init();
-  walk.walker_sticks = false;
+  walk.walker_sticks = true;
 
 }
 
@@ -128,7 +128,7 @@ function reset_controls() {
   gravityslider.value = 2;
   playbackspeedslider.value = 1;
 
-  linesswitch.checked = false;
+  linesswitch.checked = true;
   pauseswitch.checked = false;
 }
 
