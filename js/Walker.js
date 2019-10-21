@@ -167,33 +167,40 @@ Walker.prototype.drawWalker = function (curtime) {
   var ypos2 =  2* this.offsety + (yval2 / this.walkersizefactor) * this.walker_size * this.pixelsperdegree;
   vectors[n+1] = new Array(xpos1, ypos2);
   vectors[n+2] = new Array(xpos2, ypos1);
-  this.drawLineX(vectors[n+1], vectors[n+2]);
+  this.drawLineX(vectors[n+1], vectors[n+2], "#000000");
 
+  // Draw metabolic rate
+  this.ctx.font = "14px Arial";
+  this.ctx.fillText("Metabolic Rate:", 10, 20); 
+  var metRate = this.data[this.dataStr][curnode][30];
+  this.ctx.lineWidth = 10;
+  this.drawLineX(new Array(110, 15), new Array(metRate*2+110, 15), "#003660");
+  this.ctx.lineWidth = 1;
 
   if (this.walker_sticks) {
     if (this.walker_object == 0) {
       // Trunk
-      this.drawLineX(vectors[0], vectors[1]);
+      this.drawLineX(vectors[0], vectors[1], this.walker_colour);
       // Rigth leg
-      this.drawLineX(vectors[1], vectors[2]);
-      this.drawLineX(vectors[2], vectors[3]);
-      this.drawLineX(vectors[3], vectors[4]);
-      this.drawLineX(vectors[4], vectors[5]);
-      this.drawLineX(vectors[5], vectors[3]); // back to the ankle
+      this.drawLineX(vectors[1], vectors[2], this.walker_colour);
+      this.drawLineX(vectors[2], vectors[3], this.walker_colour);
+      this.drawLineX(vectors[3], vectors[4], this.walker_colour);
+      this.drawLineX(vectors[4], vectors[5], this.walker_colour);
+      this.drawLineX(vectors[5], vectors[3], this.walker_colour); // back to the ankle
       // Left leg
-      this.drawLineX(vectors[1], vectors[6]);
-      this.drawLineX(vectors[6], vectors[7]);
-      this.drawLineX(vectors[7], vectors[8]);
-      this.drawLineX(vectors[8], vectors[9]);
-      this.drawLineX(vectors[9], vectors[7]); // back to the ankle
+      this.drawLineX(vectors[1], vectors[6], this.walker_colour);
+      this.drawLineX(vectors[6], vectors[7], this.walker_colour);
+      this.drawLineX(vectors[7], vectors[8], this.walker_colour);
+      this.drawLineX(vectors[8], vectors[9], this.walker_colour);
+      this.drawLineX(vectors[9], vectors[7], this.walker_colour); // back to the ankle
       // Right foot without deformation
-      this.drawLineX(vectors[3], vectors[10]);
-      this.drawLineX(vectors[10], vectors[11]);
-      this.drawLineX(vectors[11], vectors[3]); // back to the ankle
+      this.drawLineX(vectors[3], vectors[10], this.walker_colour);
+      this.drawLineX(vectors[10], vectors[11], this.walker_colour);
+      this.drawLineX(vectors[11], vectors[3], this.walker_colour); // back to the ankle
       // Left foot without deformation
-      this.drawLineX(vectors[7], vectors[12]);
-      this.drawLineX(vectors[12], vectors[13]);
-      this.drawLineX(vectors[13], vectors[7]); // back to the ankle
+      this.drawLineX(vectors[7], vectors[12], this.walker_colour);
+      this.drawLineX(vectors[12], vectors[13], this.walker_colour);
+      this.drawLineX(vectors[13], vectors[7], this.walker_colour); // back to the ankle
     }
   }
 }
@@ -207,18 +214,17 @@ Walker.prototype.drawDot = function (x, y) {
 }
 
 
-Walker.prototype.drawLineX = function (vectorFrom, vectorTo) {
+Walker.prototype.drawLineX = function (vectorFrom, vectorTo, color) {
 
   var moveX = vectorFrom[0];
   var moveY = vectorFrom[1];
   var lineX = vectorTo[0];
   var lineY = vectorTo[1];
 
-  this.ctx.strokeStyle = this.walker_colour;
+  this.ctx.strokeStyle = color;
   this.ctx.beginPath();
   this.ctx.moveTo(moveX, moveY);
   this.ctx.lineTo(lineX, lineY);
-
   this.ctx.stroke();
   this.ctx.closePath();
 
