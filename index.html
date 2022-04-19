@@ -40,16 +40,14 @@
 		}
 
 		div.controlbar {
-			width: 350px;
-			margin-left: 900px;
-			margin-top: -700px;
-			margin-right: -0px;
+			float: left;
+			margin-left: 50px;
 		}
 
 		canvas#wc {
 			border: 3px solid #003660;
-			margin-left: 300px;
-			width: 550px
+			float: left;
+			margin-left: 30px;
 		}
 
 		.slider {
@@ -119,26 +117,25 @@
 <body
 	class="page-template-default page page-id-835 wp-custom-logo ehf-footer ehf-template-campus-lite ehf-stylesheet-campus-2018 group-blog elementor-default">
 	<div class="header" align="center">
-	    <br>
-		<div class="logo">
-			<a href="https://www.mad.tf.fau.de" class="custom-logo-link" rel="home" target="_blank"><img width="300" height="53"
+		<div class="logo" style="float:center;width:300;padding:20px">
+			<a href="https://www.mad.tf.fau.de" class="custom-logo-link" rel="home" target="_blank"><img width="300" height="53" style="padding: 20px;"
 					src="images/cropped-logo_mad.png" class="custom-logo" alt="MaD Lab"></a>
 		</div>
 		<h1>MaD Walker</h1>
 		<br><br><br>
 	</div><!-- header -->
 
-	<div class="wrap">
+	<div class="wrap" style="text-align: center;">
 
 
-		<div class="canvas-container">
+		<div class="canvas-container" style="display: inline-block;">
 
 			<canvas id="wc" width="450" height="575">
 			</canvas>
 		</div>
 
 
-		<div class="controlbar-wrapper">
+		<div class="controlbar-wrapper" style="display: inline-block; text-align: left;">
 			<div class="controlbar">
 				<h2>Speed</h2>
 				<div class="fl-left">Walking</div>
